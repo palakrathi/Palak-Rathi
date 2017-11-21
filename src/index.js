@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import App from "./App";
 import HomePage from "./HomePage";
 import thunkMiddleware from "redux-thunk";
@@ -20,6 +20,7 @@ ReactDOM.render(
 <Provider store={store} >
 <Router >
     <div>
+    <Redirect from="/" to="/login" />
     <Route path="/login" component={App} />
     <Route path="/main" component={HomePage} />
     </div>
