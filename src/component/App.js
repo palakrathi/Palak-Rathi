@@ -3,7 +3,7 @@ import "../css/App.css";
 import PropTypes from "prop-types";
 import {validateUser} from "../actions/actions.js";
 import {connect} from "react-redux";
-let backImage = require("./image.jpg");
+let backImage = require("../images/image.jpg");
 
 class App extends Component {
     componentWillReceiveProps(nextProps) {
