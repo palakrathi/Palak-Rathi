@@ -7,9 +7,7 @@ import { connect } from "react-redux";
 var backImage = require("./image.jpg");
 class App extends Component {
     componentWillReceiveProps(nextProps) {
-        //console.log("in will receive ", nextProps);
         if (nextProps.name) {
-            //console.log(nextProps.name);
             this.props.history.push("/main");
         }
     }
