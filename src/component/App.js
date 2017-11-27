@@ -21,16 +21,14 @@ class App extends Component {
                     backgroundImage: `url(${backImage})`,
                 }}
             >
-                {" "}
                 {!!this.props.error} ?
                 <div
                     style={{
                         color: "white",
                     }}
                 >
-                    {" "}
                     {this.props.error}
-                </div>{" "}
+                </div>
                 <div className="App">
                     <form
                         onSubmit={this.props.onSubmitClick}
