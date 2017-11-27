@@ -22,13 +22,7 @@ class App extends Component {
                 }}
             >
                 {!!this.props.error} ?
-                <div
-                    style={{
-                        color: "white",
-                    }}
-                >
-                    {this.props.error}
-                </div>
+                <div className="App-Error">{this.props.error}</div>
                 <div className="App">
                     <form
                         onSubmit={this.props.onSubmitClick}
