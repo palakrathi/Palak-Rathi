@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "../css/index.css";
+import "./css/index.css";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import App from "./App";
-import HomePage from "./HomePage";
+import App from "./component/App";
+import HomePage from "./component/HomePage";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { Provider } from "react-redux";
-import verifyUser from "./reducers.js";
+import verifyUser from "./reducers/reducers.js";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, applyMiddleware } from "redux";
 

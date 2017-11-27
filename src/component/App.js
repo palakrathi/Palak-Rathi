@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "../css/App.css";
 import PropTypes from "prop-types";
-import "isomorphic-fetch";
-import { validateUser } from "./actions.js";
-import { connect } from "react-redux";
-var backImage = require("./image.jpg");
+import {validateUser} from "../actions/actions.js";
+import {connect} from "react-redux";
+let backImage = require("./image.jpg");
+
 class App extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.name) {
@@ -22,14 +22,14 @@ class App extends Component {
                 }}
             >
                 {" "}
-                {!!this.props.error} ?{" "}
+                {!!this.props.error} ?
                 <div
                     style={{
                         color: "white",
                     }}
                 >
                     {" "}
-                    {this.props.error}{" "}
+                    {this.props.error}
                 </div>{" "}
                 <div className="App">
                     <form
@@ -52,8 +52,8 @@ class App extends Component {
                                     height: 30,
                                     width: 250,
                                 }}
-                            />{" "}
-                        </div>{" "}
+                            />
+                        </div>
                         <div className="row">
                             <input
                                 type="password"
@@ -67,8 +67,8 @@ class App extends Component {
                                     marginTop: 10,
                                     marginBottom: 10,
                                 }}
-                            />{" "}
-                        </div>{" "}
+                            />
+                        </div>
                         <div className="row">
                             <input
                                 type="submit"
@@ -76,10 +76,10 @@ class App extends Component {
                                 style={{
                                     width: 250,
                                 }}
-                            />{" "}
-                        </div>{" "}
-                    </form>{" "}
-                </div>{" "}
+                            />
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
@@ -90,6 +90,7 @@ App.propTypes = {
     error: PropTypes.string,
     name: PropTypes.string,
 };
+
 function mapStateToProps(state) {
     return {
         name: state.name,

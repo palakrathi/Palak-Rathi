@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+
 export function loginSuccess(name) {
     return {
         type: LOGIN_SUCCESS,
@@ -9,6 +10,7 @@ export function loginSuccess(name) {
         name,
     };
 }
+
 export function loginFailure(errorMsg) {
     return {
         type: LOGIN_FAILURE,
@@ -16,6 +18,7 @@ export function loginFailure(errorMsg) {
         error: errorMsg,
     };
 }
+
 export function validateUser(event) {
     event.preventDefault();
     let name = event.target[0].value;
