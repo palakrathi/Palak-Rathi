@@ -1,24 +1,31 @@
-.App {
+.App-page {
     display: block;
     text-align: center;
 }
 .App-background {
-    background-position: fixed;
+    background-position: initial;
     background-size: cover;
-    --background-Image: `url(${backImage})`;
+    background-image: url("../images/image.jpg");
 }
 .App-form {
     display: inline-block;
-    margin-top: 250;
-    margin-bottom: 350;
+    margin-top: 300px;
+    margin-bottom: 350px;
     text-align: center;
 }
 .App-input {
-    font-size: 12;
-    padding: 5;
-    height: 30;
-    width: 250;
+    font-size: 12px;
+    padding: 5px;
+    height: 30px;
+    width: 250px;
 }
-.App-Error {
-    color: "white";
+.AppError {
+    color: white;
+}
+.Main-head {
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    padding-top: 50px;
+    margin-bottom: 650px;
 }

@@ -3,7 +3,6 @@ import "../css/App.css";
 import PropTypes from "prop-types";
 import {validateUser} from "../actions/actions.js";
 import {connect} from "react-redux";
-let backImage = require("../images/image.jpg");
 
 class App extends Component {
     componentWillReceiveProps(nextProps) {
@@ -13,62 +12,23 @@ class App extends Component {
     }
     render() {
         return (
-            <div
-                className="fluid-container"
-                style={{
-                    backgroundPosition: "fixed",
-                    backgroundSize: "cover",
-                    backgroundImage: `url(${backImage})`,
-                }}
-            >
-                {!!this.props.error} ?
-                <div className="App-Error">{this.props.error}</div>
-                <div className="App">
-                    <form
-                        onSubmit={this.props.onSubmitClick}
-                        style={{
-                            display: "inline-block",
-                            marginTop: 250,
-                            marginBottom: 350,
-                            textAlign: "center",
-                        }}
-                    >
+            <div className="App-background">
+                <div className="AppError">{this.props.error}</div>
+                <div className="App-page">
+                    <form className="App-form" onSubmit={this.props.onSubmitClick}>
                         <div className="row">
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Name"
-                                style={{
-                                    fontSize: 12,
-                                    padding: 5,
-                                    height: 30,
-                                    width: 250,
-                                }}
-                            />
+                            <input type="text" name="name" placeholder="Name" className="App-input" />
                         </div>
                         <div className="row">
                             <input
                                 type="password"
                                 name="password"
+                                className="App-input"
                                 placeholder="Password"
-                                style={{
-                                    fontSize: 12,
-                                    padding: 5,
-                                    height: 30,
-                                    width: 250,
-                                    marginTop: 10,
-                                    marginBottom: 10,
-                                }}
                             />
                         </div>
                         <div className="row">
-                            <input
-                                type="submit"
-                                value="Submit"
-                                style={{
-                                    width: 250,
-                                }}
-                            />
+                            <input type="submit" value="Submit" />
                         </div>
                     </form>
                 </div>
@@ -78,7 +38,7 @@ class App extends Component {
 }
 App.propTypes = {
     history: PropTypes.object,
-    onSubmitClick: PropTypes.function,
+    onSubmitClick: PropTypes.func,
     error: PropTypes.string,
     name: PropTypes.string,
 };

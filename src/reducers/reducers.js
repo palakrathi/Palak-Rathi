@@ -1,3 +1,3 @@
-export default function verifyUser(action) {
+export default function verifyUser(state, action) {
     return Object.assign({}, action);
 }

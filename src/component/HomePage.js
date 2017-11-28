@@ -1,12 +1,9 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import "../css/App.css";
 
 class HomePage extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount() {
         if (!this.props.verify) {
             this.props.history.replace({
@@ -17,13 +14,10 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div
-                className="App"
-                style={{
-                    display: "flex",
-                }}
-            >
-                Welcome {this.props.name}{" "}
+            <div className="App-background">
+                <div className="App-page">
+                    <div className="Main-head"> Welcome {this.props.name} !</div>;
+                </div>
             </div>
         );
     }
