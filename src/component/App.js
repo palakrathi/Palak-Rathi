@@ -28,7 +28,7 @@ class App extends Component {
                             />
                         </div>
                         <div className="row">
-                            <input type="submit" value="Submit" />
+                            <input type="submit" value="Submit" className="App-button" />
                         </div>
                     </form>
                 </div>

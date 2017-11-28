@@ -18,9 +18,13 @@
     padding: 5px;
     height: 30px;
     width: 250px;
+    margin-bottom: 10px;
 }
 .AppError {
     color: white;
+}
+.App-button {
+    width: 250px;
 }
 .Main-head {
     text-align: center;
