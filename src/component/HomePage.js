@@ -5,9 +5,10 @@ import "../css/App.css";
 
 class HomePage extends Component {
     componentWillMount() {
-        if (!this.props.verify) {
+        console.log(this.props.name);
+        if (!this.props.name) {
             this.props.history.replace({
-                pathname: "/login",
+                pathname: "/",
             });
         }
     }
@@ -23,7 +24,6 @@ class HomePage extends Component {
     }
 }
 HomePage.propTypes = {
-    verify: PropTypes.bool,
     history: PropTypes.object,
     name: PropTypes.string,
 };
@@ -31,7 +31,6 @@ HomePage.propTypes = {
 function mapStateToProps(state) {
     return {
         name: state.name,
-        verify: state.verify,
     };
 }
 export default connect(mapStateToProps)(HomePage);

@@ -21,7 +21,8 @@
     margin-bottom: 10px;
 }
 .AppError {
-    color: white;
+    color: red;
+    margin-bottom: 10px;
 }
 .App-button {
     width: 250px;

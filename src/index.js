@@ -1,24 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./css/index.css";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import App from "./component/App";
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import AppContainer from "./container/AppContainer";
 import HomePage from "./component/HomePage";
-import thunkMiddleware from "redux-thunk";
-import { createLogger } from "redux-logger";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import verifyUser from "./reducers/reducers.js";
 import registerServiceWorker from "./registerServiceWorker";
-import { createStore, applyMiddleware } from "redux";
+import {createStore} from "redux";
 
-const loggerMiddleware = createLogger();
-const store = createStore(verifyUser, applyMiddleware(thunkMiddleware, loggerMiddleware));
+const store = createStore(verifyUser);
 ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <Redirect from="/" to="/login" />
-                <Route path="/login" component={App} />
+                <Route exact path="/" component={AppContainer} />
                 <Route path="/main" component={HomePage} />
             </div>
         </Router>
