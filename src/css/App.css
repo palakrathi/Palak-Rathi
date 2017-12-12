@@ -1,16 +1,33 @@
-.App-page {
-    display: block;
+body {
+    background-image: url("../images/image.jpg");
+    background-repeat: no-repeat;
+    width: 100%;
+}
+.App-loader {
+    /*padding-bottom: 400px;*/
     text-align: center;
 }
+.App-page {
+    display: inline-block;
+    text-align: center;
+    margin-top: 200px;
+    margin-left: 500px;
+}
 .App-background {
-    background-position: initial;
+    background: url("../images/image.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    background-image: url("../images/image.jpg");
 }
 .App-form {
     display: inline-block;
-    margin-top: 300px;
-    margin-bottom: 350px;
+    padding-top: 250px;
+    background-color: #d4aeae;
+    padding: 50px;
+    border: 2px solid #bd7979;
+    /*padding-top: 200px;*/
+    /*margin-bottom: 350px;*/
     text-align: center;
 }
 .App-input {
@@ -31,6 +48,53 @@
     text-align: center;
     color: white;
     font-size: 24px;
-    padding-top: 50px;
-    margin-bottom: 650px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+    /*padding-bottom: 500px;*/
+}
+.Input-search {
+    align: center;
+    height: 40px;
+    width: 800px;
+    margin-bottom: 20px;
+}
+.f0 {
+    font-size: 20px;
+}
+.f1 {
+    font-size: 19px;
+}
+.f2 {
+    font-size: 18px;
+}
+.f3 {
+    font-size: 17px;
+}
+.f4 {
+    font-size: 16px;
+}
+.f5 {
+    font-size: 15px;
+}
+.f6 {
+    font-size: 14px;
+}
+.f7 {
+    font-size: 13px;
+}
+.f8 {
+    font-size: 12px;
+}
+.f9 {
+    font-size: 11px;
+}
+.f10 {
+    font-size: 10px;
+}
+.table {
+    align: center;
+    width: 100%;
+    border: none;
+    margin: none;
+    color: white;
 }

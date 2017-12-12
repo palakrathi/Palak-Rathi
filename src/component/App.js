@@ -3,17 +3,20 @@ import "../css/App.css";
 import PropTypes from "prop-types";
 import fetch from "isomorphic-fetch";
 import cookie from "react-cookies";
+import Loadable from "react-loading-overlay";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.onButtonClick = this.onButtonClick.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.validateData = this.validateData.bind(this);
 
         this.state = {
             username: "",
             password: "",
             error: "",
+            loader: false,
         };
     }
 
@@ -28,78 +31,101 @@ export default class App extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
+    validateData(data, comp) {
+        let results = {
+            loader: false,
+            error: "",
+            verified: false,
+        };
+
+        if (data.results.length === 0) {
+            results.loader = false;
+            results.error = "Name not found!";
+        } else {
+            if (comp.state.username === data.results[0].name) {
+                if (comp.state.password === data.results[0].birth_year) {
+                    results.verified = true;
+                } else {
+                    results.loader = false;
+                    results.error = "Incorrect Password!";
+                }
+            } else {
+                results.loader = false;
+                results.error = "Name not found!";
+            }
+        }
+
+        return results;
+    }
+
     onButtonClick() {
-        console.log(this.props);
+        this.setState({loader: true});
         var comp = this;
         fetch(`https://swapi.co/api/people/?search=${this.state.username}`)
             .then(results => {
                 return results.json();
             })
             .then(data => {
-                if (data.results.length === 0) {
-                    comp.setState({
-                        error: "Name not found!",
-                    });
+                let results = this.validateData(data, comp);
+                if (results.verified) {
+                    comp.props.addUser(comp.state.username);
+                    cookie.save("username", comp.state.username);
+                    comp.props.history.push("/main");
                 } else {
-                    let UserName = data.results[0].name;
-                    let BirthYear = data.results[0].birth_year;
-                    if (comp.state.username === UserName) {
-                        if (comp.state.password === BirthYear) {
-                            comp.props.addUser(comp.state.username);
-                            cookie.save("username", comp.state.username);
-                            comp.props.history.push("/main");
-                        } else {
-                            this.setState({
-                                error: "Incorrect Password!",
-                            });
-                        }
-                    } else {
-                        this.setState({
-                            error: "Name not found!",
-                        });
-                    }
+                    this.setState({
+                        loader: results.loader,
+                        error: results.error,
+                    });
                 }
             });
     }
 
     render() {
         return (
-            <div className="App-background">
-                <div className="App-page">
-                    <form className="App-form">
-                        <div className="row">
-                            <input
-                                required
-                                type="text"
-                                name="username"
-                                placeholder="Name"
-                                className="App-input"
-                                onChange={this.onChange}
-                                value={this.state.username}
-                            />
-                        </div>
-                        <div className="row">
-                            <input
-                                required
-                                type="password"
-                                name="password"
-                                className="App-input"
-                                placeholder="Password"
-                                onChange={this.onChange}
-                                value={this.state.password}
-                            />
-                        </div>
-                        <div className="AppError">{this.state.error}</div>
-                        <div className="row">
-                            <input
-                                type="button"
-                                value="Submit"
-                                className="App-button"
-                                onClick={this.onButtonClick}
-                            />
-                        </div>
-                    </form>
-                </div>
+            <div className=" App-page">
+                <Loadable
+                    active={this.state.loader}
+                    className="App-loader"
+                    spinner
+                    background="gray"
+                    color="white"
+                >
+                    <figure className="figure App-form">
+                        <form>
+                            <div className="form-group">
+                                <input
+                                    required
+                                    type="text"
+                                    name="username"
+                                    placeholder="Name"
+                                    className="form-control"
+                                    onChange={this.onChange}
+                                    value={this.state.username}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    required
+                                    type="password"
+                                    name="password"
+                                    className="form-control"
+                                    placeholder="Password"
+                                    onChange={this.onChange}
+                                    value={this.state.password}
+                                />
+                            </div>
+                            <div className="AppError">{this.state.error}</div>
+                            <div className="form-group">
+                                <input
+                                    type="button"
+                                    value="Submit"
+                                    className="App-button btn btn-primary"
+                                    onClick={this.onButtonClick}
+                                />
+                            </div>
+                        </form>
+                    </figure>
+                </Loadable>
             </div>
         );
     }

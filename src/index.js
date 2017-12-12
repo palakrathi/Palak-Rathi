@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./css/index.css";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import AppContainer from "./container/AppContainer";
-import HomePage from "./component/HomePage";
+import HomeContainer from "./container/HomeContainer";
 import {Provider} from "react-redux";
 import verifyUser from "./reducers/reducers.js";
 import registerServiceWorker from "./registerServiceWorker";
@@ -15,7 +15,7 @@ ReactDOM.render(
         <Router>
             <div>
                 <Route exact path="/" component={AppContainer} />
-                <Route path="/main" component={HomePage} />
+                <Route path="/main" component={HomeContainer} />
             </div>
         </Router>
     </Provider>,
