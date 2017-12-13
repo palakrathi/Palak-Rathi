@@ -1,13 +1,14 @@
 import React, {Component} from "react";
-import "../css/App.css";
+import "../css/app.css";
 import PropTypes from "prop-types";
-import fetch from "isomorphic-fetch";
+import fetchData from "../helpers/fetchData.js";
 import cookie from "react-cookies";
 import Loadable from "react-loading-overlay";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
+
         this.onButtonClick = this.onButtonClick.bind(this);
         this.onChange = this.onChange.bind(this);
         this.validateData = this.validateData.bind(this);
@@ -31,7 +32,7 @@ export default class App extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    validateData(data, comp) {
+    validateData(data) {
         let results = {
             loader: false,
             error: "",
@@ -42,8 +43,8 @@ export default class App extends Component {
             results.loader = false;
             results.error = "Name not found!";
         } else {
-            if (comp.state.username === data.results[0].name) {
-                if (comp.state.password === data.results[0].birth_year) {
+            if (this.state.username === data.results[0].name) {
+                if (this.state.password === data.results[0].birth_year) {
                     results.verified = true;
                 } else {
                     results.loader = false;
@@ -60,24 +61,20 @@ export default class App extends Component {
 
     onButtonClick() {
         this.setState({loader: true});
-        var comp = this;
-        fetch(`https://swapi.co/api/people/?search=${this.state.username}`)
-            .then(results => {
-                return results.json();
-            })
-            .then(data => {
-                let results = this.validateData(data, comp);
-                if (results.verified) {
-                    comp.props.addUser(comp.state.username);
-                    cookie.save("username", comp.state.username);
-                    comp.props.history.push("/main");
-                } else {
-                    this.setState({
-                        loader: results.loader,
-                        error: results.error,
-                    });
-                }
-            });
+        let comp = this;
+        fetchData(`people/?search=${this.state.username}`).then(function(data) {
+            let results = comp.validateData(data);
+            if (results.verified) {
+                comp.props.addUser(comp.state.username);
+                cookie.save("username", comp.state.username);
+                comp.props.history.push("/main");
+            } else {
+                comp.setState({
+                    loader: results.loader,
+                    error: results.error,
+                });
+            }
+        });
     }
 
     render() {
@@ -132,4 +129,5 @@ export default class App extends Component {
 }
 App.propTypes = {
     history: PropTypes.object,
+    addUser: PropTypes.func,
 };

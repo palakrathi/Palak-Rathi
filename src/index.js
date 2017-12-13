@@ -5,11 +5,11 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import AppContainer from "./container/AppContainer";
 import HomeContainer from "./container/HomeContainer";
 import {Provider} from "react-redux";
-import verifyUser from "./reducers/reducers.js";
+import rootReducer from "./reducers/reducers.js";
 import registerServiceWorker from "./registerServiceWorker";
 import {createStore} from "redux";
 
-const store = createStore(verifyUser);
+const store = createStore(rootReducer);
 ReactDOM.render(
     <Provider store={store}>
         <Router>

@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import App from "../component/App.js";
-import loginAction from "../actions/actions.js";
+import loginAction from "../actions/loginAction.js";
 
 function mapDispatchToProps(dispatch) {
     return {
