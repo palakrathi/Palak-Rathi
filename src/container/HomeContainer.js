@@ -6,7 +6,7 @@ import searchPlanetsAction from "../actions/searchPlanetsAction.js";
 function mapStateToProps(state) {
     return {
         name: state.username,
-        SearchResults: state.searchResults,
+        searchResults: state.searchResults,
     };
 }
 

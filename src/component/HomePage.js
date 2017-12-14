@@ -12,6 +12,9 @@ export default class HomePage extends Component {
 
         this.onButtonClick = this.onButtonClick.bind(this);
         this.onPlanetSearch = this.onPlanetSearch.bind(this);
+        this.onFetchedData = this.onFetchedData.bind(this);
+        this.sortData = this.sortData.bind(this);
+
         this.state = {
             key: "",
             loader: false,
@@ -32,16 +35,42 @@ export default class HomePage extends Component {
         this.props.history.push("/");
     }
 
+    sortData(data, key) {
+        let sortedData = {};
+        sortedData[key] = {
+            count: data.results.length,
+            results: data.results
+                .sort(function(obj1, obj2) {
+                    let a = Number(obj1.population);
+                    let b = Number(obj2.population);
+                    if (isNaN(a)) {
+                        return 1;
+                    } else if (isNaN(b)) {
+                        return -1;
+                    }
+                    return b - a;
+                })
+                .map(function(obj) {
+                    return {name: obj.name, population: obj.population};
+                }),
+        };
+        return sortedData;
+    }
+
+    onFetchedData(results) {
+        this.setState({loader: false});
+        this.props.updateResults(this.sortData(results, this.state.key));
+    }
+
     onPlanetSearch(event) {
         if (event.target.value.length > 1) {
             this.setState({key: event.target.value});
-            if (!this.props.SearchResults || !this.props.SearchResults[event.target.value]) {
+            if (!this.props.searchResults || !this.props.searchResults[event.target.value]) {
                 this.setState({loader: true});
                 let comp = this;
-                fetchData(`planets/?search=${event.target.value}`).then(results => {
-                    comp.setState({loader: false});
-                    comp.props.updateResults(results);
-                });
+                fetchData(`planets/?search=${event.target.value}`).then(results =>
+                    this.onFetchedData(results)
+                );
             }
         } else {
             this.setState({key: ""});
@@ -49,8 +78,6 @@ export default class HomePage extends Component {
     }
 
     render() {
-        const PlanetPopulation = PlanetsPopulation(this.props, this.state);
-
         return (
             <div className="container-fluid">
                 <div className="Main-head row justify-content-end">
@@ -86,7 +113,15 @@ export default class HomePage extends Component {
                             background="gray"
                             color="white"
                         >
-                            <table className="table table-dark">{PlanetPopulation}</table>
+                            <table className="table table-dark">
+                                <PlanetsPopulation
+                                    searchResults={
+                                        this.props.searchResults
+                                            ? this.props.searchResults[this.state.key]
+                                            : null
+                                    }
+                                />
+                            </table>
                         </Loadable>
                     </div>
                 </div>
@@ -97,4 +132,6 @@ export default class HomePage extends Component {
 HomePage.propTypes = {
     history: PropTypes.object,
     name: PropTypes.string,
+    searchResults: PropTypes.object,
+    logout: PropTypes.func,
 };

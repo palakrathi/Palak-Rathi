@@ -12,6 +12,7 @@ export default class App extends Component {
         this.onButtonClick = this.onButtonClick.bind(this);
         this.onChange = this.onChange.bind(this);
         this.validateData = this.validateData.bind(this);
+        this.onFetchedData = this.onFetchedData.bind(this);
 
         this.state = {
             username: "",
@@ -59,22 +60,24 @@ export default class App extends Component {
         return results;
     }
 
+    onFetchedData(data) {
+        let results = this.validateData(data);
+        if (results.verified) {
+            this.props.addUser(this.state.username);
+            cookie.save("username", this.state.username);
+            this.props.history.push("/main");
+        } else {
+            this.setState({
+                loader: results.loader,
+                error: results.error,
+            });
+        }
+    }
+
     onButtonClick() {
         this.setState({loader: true});
         let comp = this;
-        fetchData(`people/?search=${this.state.username}`).then(function(data) {
-            let results = comp.validateData(data);
-            if (results.verified) {
-                comp.props.addUser(comp.state.username);
-                cookie.save("username", comp.state.username);
-                comp.props.history.push("/main");
-            } else {
-                comp.setState({
-                    loader: results.loader,
-                    error: results.error,
-                });
-            }
-        });
+        fetchData(`people/?search=${this.state.username}`).then(data => this.onFetchedData(data));
     }
 
     render() {

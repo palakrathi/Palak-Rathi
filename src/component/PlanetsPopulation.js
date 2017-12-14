@@ -1,9 +1,10 @@
 import React, {Component} from "react";
+import "../css/app.css";
 
-export default function(props, state) {
-    if (props.SearchResults && props.SearchResults[state.key]) {
-        if (props.SearchResults[state.key].count) {
-            const mapped = props.SearchResults[state.key].results.map(function(key, index) {
+export default function(props) {
+    if (props.searchResults) {
+        if (props.searchResults.count) {
+            const mapped = props.searchResults.results.map(function(key, index) {
                 let cname = `f${index}`;
                 return (
                     <tr key={index} className={cname}>
