@@ -134,4 +134,5 @@ HomePage.propTypes = {
     name: PropTypes.string,
     searchResults: PropTypes.object,
     logout: PropTypes.func,
+    updateResults: PropTypes.func,
 };
