@@ -13,29 +13,13 @@ export default class HomePage extends Component {
         this.onButtonClick = this.onButtonClick.bind(this);
         this.onPlanetSearch = this.onPlanetSearch.bind(this);
         this.onFetchedData = this.onFetchedData.bind(this);
-        this.sortData = this.sortData.bind(this);
 
         this.state = {
             key: "",
             loader: false,
         };
     }
-
-    componentWillMount() {
-        if (!this.props.name) {
-            this.props.history.replace({
-                pathname: "/",
-            });
-        }
-    }
-
-    onButtonClick() {
-        this.props.logout();
-        cookie.remove("username");
-        this.props.history.push("/");
-    }
-
-    sortData(data, key) {
+    static sortData(data, key) {
         let sortedData = {};
         sortedData[key] = {
             count: data.results.length,
@@ -57,9 +41,23 @@ export default class HomePage extends Component {
         return sortedData;
     }
 
+    componentWillMount() {
+        if (!this.props.name) {
+            this.props.history.replace({
+                pathname: "/",
+            });
+        }
+    }
+
+    onButtonClick() {
+        this.props.logout();
+        cookie.remove("username");
+        this.props.history.push("/");
+    }
+
     onFetchedData(results) {
         this.setState({loader: false});
-        this.props.updateResults(this.sortData(results, this.state.key));
+        this.props.updateResults(HomePage.sortData(results, this.state.key));
     }
 
     onPlanetSearch(event) {
@@ -67,7 +65,6 @@ export default class HomePage extends Component {
             this.setState({key: event.target.value});
             if (!this.props.searchResults || !this.props.searchResults[event.target.value]) {
                 this.setState({loader: true});
-                let comp = this;
                 fetchData(`planets/?search=${event.target.value}`).then(results =>
                     this.onFetchedData(results)
                 );
@@ -78,6 +75,9 @@ export default class HomePage extends Component {
     }
 
     render() {
+        let results = null;
+        results = this.props.searchResults[this.state.key] ? this.props.searchResults[this.state.key] : null;
+
         return (
             <div className="container-fluid">
                 <div className="Main-head row justify-content-end">
@@ -114,13 +114,7 @@ export default class HomePage extends Component {
                             color="white"
                         >
                             <table className="table table-dark">
-                                <PlanetsPopulation
-                                    searchResults={
-                                        this.props.searchResults
-                                            ? this.props.searchResults[this.state.key]
-                                            : null
-                                    }
-                                />
+                                <PlanetsPopulation results={results} />
                             </table>
                         </Loadable>
                     </div>
