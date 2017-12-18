@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "fetch-mock": "^5.13.1",
         "history": "^4.7.2",
         "isomorphic-fetch": "^2.2.1",
         "react": "^16.1.1",
@@ -38,8 +39,12 @@
     },
     "jest": {
         "collectCoverage": true,
-        "setupFiles": ["./test/jestsetup.js"],
-        "snapshotSerializers": ["enzyme-to-json/serializer"],
+        "setupFiles": [
+            "./test/jestsetup.js"
+        ],
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ],
         "moduleNameMapper": {
             "^.+\\.(css|scss)$": "identity-obj-proxy"
         }

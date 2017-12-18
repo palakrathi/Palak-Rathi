@@ -76,7 +76,7 @@ export default class App extends Component {
 
     onButtonClick() {
         this.setState({loader: true});
-        fetchData(`people/?search=${this.state.username}`).then(data => this.onFetchedData(data));
+        fetchData(`people/?search=${this.state.username}`).then(data => this.onFetchedData(data.json()));
     }
 
     render() {

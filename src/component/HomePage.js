@@ -7,18 +7,6 @@ import fetchData from "../helpers/fetchData.js";
 import PlanetsPopulation from "../component/PlanetsPopulation.js";
 
 export default class HomePage extends Component {
-    constructor(props) {
-        super(props);
-
-        this.onButtonClick = this.onButtonClick.bind(this);
-        this.onPlanetSearch = this.onPlanetSearch.bind(this);
-        this.onFetchedData = this.onFetchedData.bind(this);
-
-        this.state = {
-            key: "",
-            loader: false,
-        };
-    }
     static sortData(data, key) {
         let sortedData = {};
         sortedData[key] = {
@@ -39,6 +27,19 @@ export default class HomePage extends Component {
                 }),
         };
         return sortedData;
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.onButtonClick = this.onButtonClick.bind(this);
+        this.onPlanetSearch = this.onPlanetSearch.bind(this);
+        this.onFetchedData = this.onFetchedData.bind(this);
+
+        this.state = {
+            key: "",
+            loader: false,
+        };
     }
 
     componentWillMount() {
@@ -66,7 +67,7 @@ export default class HomePage extends Component {
             if (!this.props.searchResults || !this.props.searchResults[event.target.value]) {
                 this.setState({loader: true});
                 fetchData(`planets/?search=${event.target.value}`).then(results =>
-                    this.onFetchedData(results)
+                    this.onFetchedData(results.json())
                 );
             }
         } else {
@@ -76,7 +77,9 @@ export default class HomePage extends Component {
 
     render() {
         let results = null;
-        results = this.props.searchResults[this.state.key] ? this.props.searchResults[this.state.key] : null;
+        if (this.props.searchResults[this.state.key]) {
+            results = this.props.searchResults[this.state.key];
+        }
 
         return (
             <div className="container-fluid">
